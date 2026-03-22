@@ -246,6 +246,37 @@
 .add-btn:hover {
     background: #7a001f;
 }
+
+.file-status {
+    min-height: 20px;
+    font-size: 14px;
+    color: #a8002a;
+    opacity: 0.8;
+}
+
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%) translateY(20px);
+    background: rgba(255, 255, 255, 0.92);
+    color: #a8002a;
+    padding: 14px 22px;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    z-index: 2000;
+    backdrop-filter: blur(10px);
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
     </style>
 </head>
 
@@ -481,95 +512,108 @@
         <h2>Our Videos</h2>
         <div class="slider" ontouchstart="touchStartVideo(event)" ontouchend="touchEndVideo(event)">
             <div class="slides" id="videoSlider">
+    
                 <div class="slide">
                     <div class="polaroid">
-                        <video onclick="openModal(this.querySelector('source').src)">
+                        <video controls muted playsinline onclick="openModal('video/video7.mp4', 'video/mp4')">
                             <source src="video/video7.mp4" type="video/mp4">
                         </video>
                         <div class="caption">Our moments</div>
                     </div>
                 </div>
+    
                 <div class="slide">
                     <div class="polaroid">
-                        <video onclick="openModal(this.querySelector('source').src)">
+                        <video controls muted playsinline onclick="openModal('video/video1.mp4', 'video/mp4')">
                             <source src="video/video1.mp4" type="video/mp4">
                         </video>
                         <div class="caption">Our moments</div>
                     </div>
                 </div>
+    
                 <div class="slide">
                     <div class="polaroid">
-                        <video onclick="openModal(this.querySelector('source').src)">
+                        <video controls muted playsinline onclick="openModal('video/video2.mp4', 'video/mp4')">
                             <source src="video/video2.mp4" type="video/mp4">
                         </video>
                         <div class="caption">Our moments</div>
                     </div>
                 </div>
+    
                 <div class="slide">
                     <div class="polaroid">
-                        <video onclick="openModal(this.querySelector('source').src)">
+                        <video controls muted playsinline onclick="openModal('video/video3.mp4', 'video/mp4')">
                             <source src="video/video3.mp4" type="video/mp4">
                         </video>
                         <div class="caption">Our moments</div>
                     </div>
                 </div>
+    
                 <div class="slide">
                     <div class="polaroid">
-                        <video onclick="openModal(this.querySelector('source').src)">
+                        <video controls muted playsinline onclick="openModal('video/video4.mp4', 'video/mp4')">
                             <source src="video/video4.mp4" type="video/mp4">
                         </video>
                         <div class="caption">Our moments</div>
                     </div>
                 </div>
+    
                 <div class="slide">
                     <div class="polaroid">
-                        <video onclick="openModal(this.querySelector('source').src)">
+                        <video controls muted playsinline onclick="openModal('video/video5.mp4', 'video/mp4')">
                             <source src="video/video5.mp4" type="video/mp4">
                         </video>
                         <div class="caption">Our moments</div>
                     </div>
                 </div>
+    
                 <div class="slide">
                     <div class="polaroid">
-                        <video onclick="openModal(this.querySelector('source').src)">
+                        <video controls muted playsinline onclick="openModal('video/video6.mp4', 'video/mp4')">
                             <source src="video/video6.mp4" type="video/mp4">
                         </video>
                         <div class="caption">Our moments</div>
                     </div>
                 </div>
+    
                 <div class="slide">
                     <div class="polaroid">
-                        <video onclick="openModal(this.querySelector('source').src)">
+                        <video controls muted playsinline onclick="openModal('video/video8.mp4', 'video/mp4')">
                             <source src="video/video8.mp4" type="video/mp4">
                         </video>
                         <div class="caption">Our moments</div>
                     </div>
                 </div>
+    
                 <div class="slide">
                     <div class="polaroid">
-                        <video onclick="openModal(this.querySelector('source').src)">
+                        <video controls muted playsinline onclick="openModal('video/video9.mp4', 'video/mp4')">
                             <source src="video/video9.mp4" type="video/mp4">
                         </video>
                         <div class="caption">Our moments</div>
                     </div>
                 </div>
+    
                 <div class="slide">
                     <div class="polaroid">
-                        <video onclick="openModal(this.querySelector('source').src)">
+                        <video controls muted playsinline onclick="openModal('video/video10.mp4', 'video/mp4')">
                             <source src="video/video10.mp4" type="video/mp4">
                         </video>
                         <div class="caption">Our moments</div>
                     </div>
                 </div>
+    
                 <div class="slide">
                     <div class="polaroid">
-                        <video onclick="openModal(this.querySelector('source').src)">
+                        <video controls muted playsinline onclick="openModal('video/video11.mp4', 'video/mp4')">
                             <source src="video/video11.mp4" type="video/mp4">
                         </video>
                         <div class="caption">Our moments</div>
                     </div>
                 </div>
+    
             </div>
+    
             <button class="btn prev" onclick="moveVideo(-1)">❮</button>
             <button class="btn next" onclick="moveVideo(1)">❯</button>
         </div>
@@ -589,8 +633,10 @@
 
         <label class="upload-circle">
             +
-            <input type="file" id="fileInput" accept="image/*,video/*">
+            <input type="file" id="fileInput" accept="image/*,video/*" onchange="handleFileSelect()">
         </label>
+
+        <div id="fileStatus" class="file-status">No file selected</div>
 
         <input type="text" id="captionInput" placeholder="Write something beautiful..." />
 
@@ -599,64 +645,93 @@
     </div>
 </section>
 
+<div id="toast" class="toast"></div>
     <script>
         // TIMER
         const startDate = new Date("2025-09-25");
+
         function updateTimer() {
             const now = new Date();
             const diff = now - startDate;
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
             document.getElementById("timer").innerText = `We are together ${days} days`;
         }
+
         updateTimer();
         setInterval(updateTimer, 1000);
 
         // PHOTO SLIDER
         let current = 0;
+
         function moveSlide(direction) {
             const slider = document.getElementById("photoSlider");
             const total = slider.children.length;
+
             current += direction;
+
             if (current < 0) current = total - 1;
             if (current >= total) current = 0;
+
             slider.style.transform = `translateX(-${current * 100}%)`;
         }
+
         let startX = 0;
-        function touchStart(e) { startX = e.changedTouches[0].screenX; }
+
+        function touchStart(e) {
+            startX = e.changedTouches[0].screenX;
+        }
+
         function touchEnd(e) {
-            let endX = e.changedTouches[0].screenX;
+            const endX = e.changedTouches[0].screenX;
+
             if (startX - endX > 50) moveSlide(1);
             if (endX - startX > 50) moveSlide(-1);
         }
 
         // VIDEO SLIDER
         let currentVideo = 0;
+
         function moveVideo(direction) {
             const slider = document.getElementById("videoSlider");
             const total = slider.children.length;
+
             currentVideo += direction;
+
             if (currentVideo < 0) currentVideo = total - 1;
             if (currentVideo >= total) currentVideo = 0;
+
             slider.style.transform = `translateX(-${currentVideo * 100}%)`;
         }
+
         let startXVideo = 0;
-        function touchStartVideo(e) { startXVideo = e.changedTouches[0].screenX; }
+
+        function touchStartVideo(e) {
+            startXVideo = e.changedTouches[0].screenX;
+        }
+
         function touchEndVideo(e) {
-            let endX = e.changedTouches[0].screenX;
+            const endX = e.changedTouches[0].screenX;
+
             if (startXVideo - endX > 50) moveVideo(1);
             if (endX - startXVideo > 50) moveVideo(-1);
         }
 
         // MODAL
-        function openModal(src) {
+        function openModal(src, type = "") {
             const modal = document.getElementById("modal");
             const img = document.getElementById("modal-img");
             const video = document.getElementById("modal-video");
 
             modal.style.display = "flex";
 
-            if (src.endsWith(".mp4")) {
+            const isVideo =
+                type.startsWith("video") ||
+                /\.(mp4|mov|webm|ogg)$/i.test(src);
+
+            if (isVideo) {
                 img.style.display = "none";
+                img.src = "";
+
                 video.style.display = "block";
                 video.src = src;
                 video.autoplay = true;
@@ -666,6 +741,7 @@
                 video.pause();
                 video.src = "";
                 video.style.display = "none";
+
                 img.src = src;
                 img.style.display = "block";
             }
@@ -674,6 +750,7 @@
         function closeModal() {
             const modal = document.getElementById("modal");
             const video = document.getElementById("modal-video");
+
             modal.style.display = "none";
             video.pause();
             video.src = "";
@@ -681,59 +758,156 @@
 
         // MUSIC
         let playing = false;
+
         function toggleMusic() {
             const music = document.getElementById("music");
             playing ? music.pause() : music.play();
             playing = !playing;
         }
 
-        function addMedia() {
+        // ADD MEDIA
+
+        function handleFileSelect() {
                 const fileInput = document.getElementById("fileInput");
-                const captionText = document.getElementById("captionInput").value;
-
+                const fileStatus = document.getElementById("fileStatus");
                 const file = fileInput.files[0];
-                if (!file) return;
 
-                const url = URL.createObjectURL(file);
-
-                const isVideo = file.type.startsWith("video");
-
-                const slide = document.createElement("div");
-                slide.className = "slide";
-
-                const polaroid = document.createElement("div");
-                polaroid.className = "polaroid";
-
-                let media;
-
-                if (isVideo) {
-                    media = document.createElement("video");
-                    media.innerHTML = `<source src="${url}" type="${file.type}">`;
-                    media.onclick = () => openModal(url);
+                if (file) {
+                    fileStatus.textContent = `Selected: ${file.name}`;
                 } else {
-                    media = document.createElement("img");
-                    media.src = url;
-                    media.onclick = () => openModal(url);
+                    fileStatus.textContent = "No file selected";
                 }
-
-                const caption = document.createElement("div");
-                caption.className = "caption";
-                caption.innerText = captionText;
-
-                polaroid.appendChild(media);
-                polaroid.appendChild(caption);
-                slide.appendChild(polaroid);
-
-                if (isVideo) {
-                    document.getElementById("videoSlider").appendChild(slide);
-                } else {
-                    document.getElementById("photoSlider").appendChild(slide);
-                }
-
-                // очистка
-                fileInput.value = "";
-                document.getElementById("captionInput").value = "";
             }
+
+            function showToast(message) {
+                const toast = document.getElementById("toast");
+                toast.textContent = message;
+                toast.classList.add("show");
+
+                clearTimeout(window.toastTimeout);
+                window.toastTimeout = setTimeout(() => {
+                    toast.classList.remove("show");
+                }, 2500);
+            }
+
+            async function addMedia() {
+                    const fileInput = document.getElementById("fileInput");
+                    const captionText = document.getElementById("captionInput").value.trim();
+                    const fileStatus = document.getElementById("fileStatus");
+                    const file = fileInput.files[0];
+
+                    if (!file) {
+                        showToast("Choose a photo or video first");
+                        return;
+                    }
+
+                    try {
+                        showToast("Uploading...");
+                        await window.uploadToFirebase(file, captionText);
+
+                        fileInput.value = "";
+                        document.getElementById("captionInput").value = "";
+                        fileStatus.textContent = "No file selected";
+
+                        showToast("Memory added ❤️");
+                    } catch (error) {
+                        console.error(error);
+                        showToast("Upload error");
+                    }
+                }
+
+    </script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+        import { getFirestore, addDoc, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAG6D1m6dLRmZ64pFrkolm5_EEltnaa9TE",
+            authDomain: "ourlove-4620d.firebaseapp.com",
+            projectId: "ourlove-4620d",
+            storageBucket: "ourlove-4620d.firebasestorage.app",
+            messagingSenderId: "19922774823",
+            appId: "1:19922774823:web:eeb33d3befb4547ac81702"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const storage = getStorage(app);
+        const db = getFirestore(app);
+
+        function createMemorySlide(data) {
+            const isVideo = data.type && data.type.startsWith("video");
+
+            const slide = document.createElement("div");
+            slide.className = "slide";
+
+            const polaroid = document.createElement("div");
+            polaroid.className = "polaroid";
+
+            let media;
+
+            if (isVideo) {
+                media = document.createElement("video");
+                media.controls = true;
+                media.muted = true;
+                media.playsInline = true;
+                media.innerHTML = `<source src="${data.url}" type="${data.type}">`;
+                media.onclick = () => window.openModal(data.url, data.type);
+            } else {
+                media = document.createElement("img");
+                media.src = data.url;
+                media.onclick = () => window.openModal(data.url, data.type || "");
+            }
+
+            const caption = document.createElement("div");
+            caption.className = "caption";
+            caption.innerText = data.caption || "";
+
+            polaroid.appendChild(media);
+            polaroid.appendChild(caption);
+            slide.appendChild(polaroid);
+
+            if (isVideo) {
+                document.getElementById("videoSlider").appendChild(slide);
+            } else {
+                document.getElementById("photoSlider").appendChild(slide);
+            }
+        }
+
+        async function loadMemories() {
+            try {
+                const memoriesRef = collection(db, "memories");
+                const memoriesQuery = query(memoriesRef, orderBy("createdAt", "asc"));
+                const querySnapshot = await getDocs(memoriesQuery);
+
+                querySnapshot.forEach((doc) => {
+                    createMemorySlide(doc.data());
+                });
+            } catch (error) {
+                console.error("Load memories error:", error);
+            }
+        }
+
+        window.uploadToFirebase = async function (file, caption) {
+            const filePath = `memories/${Date.now()}_${file.name}`;
+            const storageRef = ref(storage, filePath);
+
+            await uploadBytes(storageRef, file);
+            const url = await getDownloadURL(storageRef);
+
+            const memoryData = {
+                url: url,
+                caption: caption,
+                type: file.type,
+                createdAt: Date.now()
+            };
+
+            await addDoc(collection(db, "memories"), memoryData);
+
+            createMemorySlide(memoryData);
+        };
+
+        loadMemories();
     </script>
 
 </body>
