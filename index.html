@@ -152,6 +152,100 @@
             color: white;
             cursor: pointer;
         }
+        /* 📱 MOBILE */
+@media (max-width: 768px) {
+
+    .hero h1 {
+        font-size: 50px;
+        text-align: center;
+    }
+
+    .hero span {
+        font-size: 28px;
+    }
+
+    .hero p {
+        font-size: 14px;
+    }
+
+    .polaroid {
+        width: 90%;
+    }
+
+    .polaroid img,
+    .polaroid video {
+        height: 250px;
+    }
+
+    .btn {
+        font-size: 22px;
+        padding: 6px;
+    }
+
+    .section {
+        padding: 60px 10px;
+    }
+}
+/* UPLOAD UI */
+.upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+/* КРУГ С ПЛЮСОМ */
+.upload-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    color: #a8002a;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.upload-circle:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* скрываем input */
+.upload-circle input {
+    display: none;
+}
+
+/* ПОЛЕ ВВОДА */
+#captionInput {
+    width: 250px;
+    padding: 12px 15px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.6);
+    font-family: 'Playfair Display', serif;
+}
+
+/* КНОПКА */
+.add-btn {
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    background: #a8002a;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.add-btn:hover {
+    background: #7a001f;
+}
     </style>
 </head>
 
@@ -488,6 +582,23 @@
         <video id="modal-video" controls style="display:none;"></video>
     </div>
 
+<section class="section">
+    <h2>Add Your Memory</h2>
+
+    <div class="upload-container">
+
+        <label class="upload-circle">
+            +
+            <input type="file" id="fileInput" accept="image/*,video/*">
+        </label>
+
+        <input type="text" id="captionInput" placeholder="Write something beautiful..." />
+
+        <button class="add-btn" onclick="addMedia()">Add Memory</button>
+
+    </div>
+</section>
+
     <script>
         // TIMER
         const startDate = new Date("2025-09-25");
@@ -575,6 +686,54 @@
             playing ? music.pause() : music.play();
             playing = !playing;
         }
+
+        function addMedia() {
+                const fileInput = document.getElementById("fileInput");
+                const captionText = document.getElementById("captionInput").value;
+
+                const file = fileInput.files[0];
+                if (!file) return;
+
+                const url = URL.createObjectURL(file);
+
+                const isVideo = file.type.startsWith("video");
+
+                const slide = document.createElement("div");
+                slide.className = "slide";
+
+                const polaroid = document.createElement("div");
+                polaroid.className = "polaroid";
+
+                let media;
+
+                if (isVideo) {
+                    media = document.createElement("video");
+                    media.innerHTML = `<source src="${url}" type="${file.type}">`;
+                    media.onclick = () => openModal(url);
+                } else {
+                    media = document.createElement("img");
+                    media.src = url;
+                    media.onclick = () => openModal(url);
+                }
+
+                const caption = document.createElement("div");
+                caption.className = "caption";
+                caption.innerText = captionText;
+
+                polaroid.appendChild(media);
+                polaroid.appendChild(caption);
+                slide.appendChild(polaroid);
+
+                if (isVideo) {
+                    document.getElementById("videoSlider").appendChild(slide);
+                } else {
+                    document.getElementById("photoSlider").appendChild(slide);
+                }
+
+                // очистка
+                fileInput.value = "";
+                document.getElementById("captionInput").value = "";
+            }
     </script>
 
 </body>
