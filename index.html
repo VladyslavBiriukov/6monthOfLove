@@ -16,44 +16,121 @@
         }
 
         /* HERO */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+}
 
-        .hero h1 {
-            font-size: 90px;
-            margin: 0;
-        }
+.hero h1 {
+    font-size: 90px;
+    margin: 0;
+    line-height: 0.95;
+    letter-spacing: 2px;
+    opacity: 0;
+    transform: translateY(35px);
+    animation: heroFadeUp 1.4s ease forwards;
+}
 
-        .hero span {
-            font-family: 'Great Vibes';
-            font-size: 40px;
-            transform: rotate(-10deg);
-        }
+.hero span {
+    font-family: 'Great Vibes';
+    font-size: 40px;
+    transform: rotate(-10deg) translateY(20px);
+    margin: 10px 0 0;
+    display: inline-block;
+    opacity: 0;
+    animation: heroFadeSoft 1.4s ease forwards;
+    animation-delay: 0.45s;
+}
 
-        .hero p {
-            margin-top: 10px;
-        }
+.hero p {
+    margin-top: 10px;
+    letter-spacing: 2px;
+    opacity: 0;
+    transform: translateY(25px);
+    animation: heroFadeUp 1.4s ease forwards;
+    animation-delay: 0.85s;
+}
 
-        .timer {
-            margin-top: 20px;
-            font-size: 18px;
-        }
+.timer {
+    margin-top: 20px;
+    font-size: 18px;
+    opacity: 0;
+    transform: translateY(25px);
+    animation: heroFadeUp 1.4s ease forwards;
+    animation-delay: 1.2s;
+}
 
-        /* MUSIC */
-        .music-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-        }
+/* MUSIC */
+.music-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 46px;
+    height: 46px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.88);
+    color: #a8002a;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+    z-index: 900;
+    transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.music-btn:hover {
+    transform: scale(1.06);
+    background: rgba(255, 255, 255, 1);
+}
+
+.music-btn.playing {
+    background: #a8002a;
+    color: white;
+}
+
+.music-btn.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+@keyframes heroFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(35px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes heroFadeSoft {
+    from {
+        opacity: 0;
+        transform: rotate(-10deg) translateY(20px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: rotate(-10deg) translateY(0) scale(1);
+    }
+}
+
+@keyframes heroFadeDown {
+    from {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
         /* SECTION */
         .section {
@@ -124,19 +201,19 @@
         }
 
         /* MODAL */
-        .modal {
-            display: none;
-            position: fixed;
-            background: rgba(0, 0, 0, 0.9);
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            overflow: auto;
-        }
+.modal {
+    display: none;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.9);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+}
 
         .modal img,
         .modal video {
@@ -144,30 +221,45 @@
             max-height: 90%;
         }
 
-        .close {
-            position: absolute;
-            right: 30px;
-            top: 20px;
-            font-size: 40px;
-            color: white;
-            cursor: pointer;
-        }
+.close {
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    font-size: 40px;
+    color: white;
+    cursor: pointer;
+    z-index: 2100;
+}
 
         /* 📱 MOBILE */
         @media (max-width: 768px) {
 
             .hero h1 {
-                font-size: 50px;
-                text-align: center;
-            }
+    font-size: 54px;
+    text-align: center;
+    line-height: 0.95;
+}
 
-            .hero span {
-                font-size: 28px;
-            }
+.hero span {
+    font-size: 30px;
+}
 
-            .hero p {
-                font-size: 14px;
-            }
+.hero p {
+    font-size: 14px;
+    letter-spacing: 1.5px;
+}
+
+.timer {
+    font-size: 15px;
+    margin-top: 16px;
+}
+
+.music-btn {
+    top: 16px;
+    right: 16px;
+    padding: 10px;
+}
+
 
             .polaroid {
                 width: 90%;
@@ -364,13 +456,71 @@
             background: #a8002a;
             color: white;
         }
+
+        .upload-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.28);
+    backdrop-filter: blur(8px);
+    z-index: 3500;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.upload-box {
+    background: rgba(255, 255, 255, 0.95);
+    color: #a8002a;
+    border-radius: 24px;
+    padding: 28px 30px;
+    min-width: 260px;
+    text-align: center;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.14);
+}
+
+.upload-box p {
+    margin: 14px 0 0;
+    font-size: 17px;
+}
+
+.loader-ring {
+    width: 34px;
+    height: 34px;
+    margin: 0 auto;
+    border-radius: 50%;
+    border: 3px solid rgba(168, 0, 42, 0.18);
+    border-top-color: #a8002a;
+    animation: spinLoader 0.9s linear infinite;
+}
+
+@keyframes spinLoader {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.fade-out-card {
+    animation: fadeOutCard 0.45s ease forwards;
+}
+
+@keyframes fadeOutCard {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+}
     </style>
 </head>
 
 <body>
 
     <!-- MUSIC -->
-    <button class="music-btn" onclick="toggleMusic()">🎵</button>
+    <button class="music-btn" type="button" onclick="toggleMusic()">🎵</button>
     <audio id="music" loop>
         <source src="music/Giacomo Puccini (Gianni Schicchi) - O mio babbino caro.mp3" type="audio/mpeg">
     </audio>
@@ -732,6 +882,13 @@
         </div>
     </section>
 
+    <div id="uploadOverlay" class="upload-overlay">
+        <div class="upload-box">
+            <div class="loader-ring"></div>
+            <p>Uploading your memory...</p>
+        </div>
+    </div>
+
     <div id="toast" class="toast"></div>
     <div id="confirmModal" class="confirm-modal">
         <div class="confirm-box">
@@ -813,54 +970,30 @@
             if (endX - startXVideo > 50) moveVideo(-1);
         }
 
-        // MODAL
-        function openModal(src, type = "") {
-            const modal = document.getElementById("modal");
-            const img = document.getElementById("modal-img");
-            const video = document.getElementById("modal-video");
-
-            modal.style.display = "flex";
-
-            const isVideo =
-                type.startsWith("video") ||
-                /\.(mp4|mov|webm|ogg)$/i.test(src);
-
-            if (isVideo) {
-                img.style.display = "none";
-                img.src = "";
-
-                video.style.display = "block";
-                video.src = src;
-                video.autoplay = true;
-                video.load();
-                video.play().catch(() => { });
-            } else {
-                video.pause();
-                video.src = "";
-                video.style.display = "none";
-
-                img.src = src;
-                img.style.display = "block";
-            }
-        }
-
-        function closeModal() {
-            const modal = document.getElementById("modal");
-            const video = document.getElementById("modal-video");
-
-            modal.style.display = "none";
-            video.pause();
-            video.src = "";
-        }
 
         // MUSIC
+
         let playing = false;
 
-        function toggleMusic() {
-            const music = document.getElementById("music");
-            playing ? music.pause() : music.play();
-            playing = !playing;
-        }
+            async function toggleMusic() {
+                const music = document.getElementById("music");
+                const button = document.querySelector(".music-btn");
+
+                try {
+                    if (playing) {
+                        music.pause();
+                        playing = false;
+                        button.classList.remove("playing");
+                    } else {
+                        await music.play();
+                        playing = true;
+                        button.classList.add("playing");
+                    }
+                } catch (error) {
+                    console.error("Music play error:", error);
+                    showToast("Music could not start");
+                }
+            }
 
         // ADD MEDIA
 
@@ -887,58 +1020,119 @@
             }, 2500);
         }
 
-        let pendingDelete = null;
+        function showUploadOverlay() {
+                document.getElementById("uploadOverlay").style.display = "flex";
+            }
 
-        function openDeleteModal(docId, storagePath, slideElement) {
-            pendingDelete = { docId, storagePath, slideElement };
-            document.getElementById("confirmModal").style.display = "flex";
-        }
+            function hideUploadOverlay() {
+                document.getElementById("uploadOverlay").style.display = "none";
+            }
 
-        function closeDeleteModal() {
-            pendingDelete = null;
-            document.getElementById("confirmModal").style.display = "none";
-        }
+            let pendingDelete = null;
 
-        async function confirmDelete() {
-            if (!pendingDelete) return;
+            function openDeleteModal(docId, storagePath, slideElement) {
+                pendingDelete = { docId, storagePath, slideElement };
+                document.getElementById("confirmModal").style.display = "flex";
+            }
 
-            try {
-                await window.deleteMemory(pendingDelete.docId, pendingDelete.storagePath);
+            function closeDeleteModal() {
+                pendingDelete = null;
+                document.getElementById("confirmModal").style.display = "none";
+            }
+
+
+            //MODAL
+
+            function openModal(src, type = "") {
+                    const modal = document.getElementById("modal");
+                    const img = document.getElementById("modal-img");
+                    const video = document.getElementById("modal-video");
+                    const musicBtn = document.querySelector(".music-btn");
+
+                    modal.style.display = "flex";
+                    musicBtn.classList.add("hidden");
+
+                    const isVideo =
+                        type.startsWith("video") ||
+                        /\.(mp4|mov|webm|ogg)$/i.test(src);
+
+                    if (isVideo) {
+                        img.style.display = "none";
+                        img.src = "";
+
+                        video.style.display = "block";
+                        video.src = src;
+                        video.autoplay = true;
+                        video.load();
+                        video.play().catch(() => { });
+                    } else {
+                        video.pause();
+                        video.src = "";
+                        video.style.display = "none";
+
+                        img.src = src;
+                        img.style.display = "block";
+                    }
+                }
+
+                function closeModal() {
+                    const modal = document.getElementById("modal");
+                    const video = document.getElementById("modal-video");
+                    const musicBtn = document.querySelector(".music-btn");
+
+                    modal.style.display = "none";
+                    video.pause();
+                    video.src = "";
+                    musicBtn.classList.remove("hidden");
+                }
+
+    async function confirmDelete() {
+        if (!pendingDelete) return;
+
+        try {
+            await window.deleteMemory(pendingDelete.docId, pendingDelete.storagePath);
+
+            pendingDelete.slideElement.classList.add("fade-out-card");
+
+            setTimeout(() => {
                 pendingDelete.slideElement.remove();
                 closeDeleteModal();
                 showToast("Memory deleted");
-            } catch (error) {
-                console.error("Delete error:", error);
-                closeDeleteModal();
-                showToast("Could not delete memory");
-            }
+            }, 450);
+        } catch (error) {
+            console.error("Delete error:", error);
+            closeDeleteModal();
+            showToast("Could not delete memory");
+        }
+    }
+
+    async function addMedia() {
+        const fileInput = document.getElementById("fileInput");
+        const captionText = document.getElementById("captionInput").value.trim();
+        const fileStatus = document.getElementById("fileStatus");
+        const file = fileInput.files[0];
+
+        if (!file) {
+            showToast("Choose a photo or video first");
+            return;
         }
 
-        async function addMedia() {
-            const fileInput = document.getElementById("fileInput");
-            const captionText = document.getElementById("captionInput").value.trim();
-            const fileStatus = document.getElementById("fileStatus");
-            const file = fileInput.files[0];
+        try {
+            showUploadOverlay();
+            await window.uploadToFirebase(file, captionText);
 
-            if (!file) {
-                showToast("Choose a photo or video first");
-                return;
-            }
+            fileInput.value = "";
+            document.getElementById("captionInput").value = "";
+            fileStatus.textContent = "No file selected";
 
-            try {
-                showToast("Uploading...");
-                await window.uploadToFirebase(file, captionText);
-
-                fileInput.value = "";
-                document.getElementById("captionInput").value = "";
-                fileStatus.textContent = "No file selected";
-
-                showToast("Memory added ❤️");
-            } catch (error) {
-                console.error(error);
-                showToast("Upload error");
-            }
+            hideUploadOverlay();
+            showToast("Memory added ❤️");
+        } catch (error) {
+            console.error(error);
+            hideUploadOverlay();
+            showToast("Upload error");
         }
+    }
 
     </script>
 
