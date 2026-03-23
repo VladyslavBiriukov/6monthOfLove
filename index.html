@@ -138,8 +138,132 @@
             text-align: center;
         }
 
+/* PAGED GALLERY */
+.gallery-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.gallery-viewport {
+    overflow: hidden;
+    width: 100%;
+}
+
+.gallery-grid {
+    display: flex;
+    transition: transform 0.45s ease;
+    width: 100%;
+}
+
+.gallery-page {
+    min-width: 100%;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+    align-items: start;
+    justify-items: center;
+    padding: 10px 6px;
+}
+
+.slide {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    min-width: 0;
+}
+
+.gallery-page .polaroid {
+    width: 100%;
+    max-width: 320px;
+}
+
+.gallery-page .polaroid img,
+.gallery-page .polaroid video {
+    width: 100%;
+    height: 340px;
+    object-fit: cover;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.gallery-nav {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 26px;
+}
+
+.gallery-btn {
+    border: none;
+    background: rgba(255, 255, 255, 0.85);
+    color: #a8002a;
+    padding: 10px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 18px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.gallery-btn:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 1);
+}
+
+.gallery-btn:disabled {
+    opacity: 0.45;
+    cursor: default;
+    transform: none;
+}
+
+@media (max-width: 900px) {
+    .gallery-page {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px;
+    }
+}
+
+@media (max-width: 600px) {
+    .gallery-page {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .gallery-page .polaroid {
+        max-width: 100%;
+    }
+
+    .gallery-page .polaroid img,
+    .gallery-page .polaroid video {
+        height: 280px;
+    }
+}
+
+@media (max-width: 900px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px;
+    }
+}
+
+@media (max-width: 600px) {
+    .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .gallery-grid .polaroid {
+        max-width: 100%;
+    }
+
+    .gallery-grid .polaroid img,
+    .gallery-grid .polaroid video {
+        height: 280px;
+    }
+}
         /* SLIDER */
-        .slider {
+        /* .slider {
             position: relative;
             max-width: 90%;
             margin: auto;
@@ -155,7 +279,7 @@
             min-width: 100%;
             display: flex;
             justify-content: center;
-        }
+        } */
 
         /* POLAROID */
         .polaroid {
@@ -181,7 +305,7 @@
         }
 
         /* BUTTONS */
-        .btn {
+        /* .btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
@@ -198,7 +322,7 @@
 
         .next {
             right: 10px;
-        }
+        } */
 
         /* MODAL */
 .modal {
@@ -261,14 +385,14 @@
 }
 
 
-            .polaroid {
-                width: 90%;
-            }
+.gallery-page .polaroid {
+    width: 100%;
+}
 
-            .polaroid img,
-            .polaroid video {
-                height: 250px;
-            }
+.gallery-page .polaroid img,
+.gallery-page .polaroid video {
+    height: 250px;
+}
 
             .btn {
                 font-size: 22px;
@@ -534,11 +658,12 @@
     </section>
 
     <!-- PHOTO SLIDER -->
-    <section class="section">
-        <h2>Our Moments</h2>
-        <div class="slider" ontouchstart="touchStart(event)" ontouchend="touchEnd(event)">
+<section class="section">
+    <h2>Our Moments</h2>
 
-            <div class="slides" id="photoSlider">
+    <div class="gallery-wrap">
+        <div class="gallery-viewport">
+            <div class="gallery-grid" id="photoSlider">
 
                 <!-- 🔥 ТВОИ ФОТО -->
                 <div class="slide">
@@ -576,7 +701,6 @@
                         <div class="caption">You & Me</div>
                     </div>
                 </div>
-
                 <div class="slide">
                     <div class="polaroid"><img src="img/IMG_0272.JPG" onclick="openModal(this.src)">
                         <div class="caption">Always</div>
@@ -592,7 +716,6 @@
                         <div class="caption">With you</div>
                     </div>
                 </div>
-
                 <div class="slide">
                     <div class="polaroid"><img src="img/IMG_0420.JPG" onclick="openModal(this.src)">
                         <div class="caption">Miss you</div>
@@ -603,7 +726,6 @@
                         <div class="caption">Sadness</div>
                     </div>
                 </div>
-
                 <div class="slide">
                     <div class="polaroid"><img src="img/IMG_0506.PNG" onclick="openModal(this.src)">
                         <div class="caption">Distance</div>
@@ -619,7 +741,6 @@
                         <div class="caption">Happy</div>
                     </div>
                 </div>
-
                 <div class="slide">
                     <div class="polaroid"><img src="img/IMG_1382.JPG" onclick="openModal(this.src)">
                         <div class="caption">Forever</div>
@@ -635,7 +756,6 @@
                         <div class="caption">Together</div>
                     </div>
                 </div>
-
                 <div class="slide">
                     <div class="polaroid"><img src="img/IMG_1479.JPG" onclick="openModal(this.src)">
                         <div class="caption">Always</div>
@@ -651,7 +771,6 @@
                         <div class="caption">US</div>
                     </div>
                 </div>
-
                 <div class="slide">
                     <div class="polaroid"><img src="img/IMG_1650.jpeg" onclick="openModal(this.src)">
                         <div class="caption">&infin;</div>
@@ -667,7 +786,6 @@
                         <div class="caption">Moments</div>
                     </div>
                 </div>
-
                 <div class="slide">
                     <div class="polaroid"><img src="img/IMG_1741.JPG" onclick="openModal(this.src)">
                         <div class="caption">Smile with you</div>
@@ -683,7 +801,6 @@
                         <div class="caption">You & Me and Love</div>
                     </div>
                 </div>
-
                 <div class="slide">
                     <div class="polaroid"><img src="img/IMG_1823.JPG" onclick="openModal(this.src)">
                         <div class="caption">Together</div>
@@ -699,7 +816,6 @@
                         <div class="caption">Love</div>
                     </div>
                 </div>
-
                 <div class="slide">
                     <div class="polaroid"><img src="img/IMG_1900.JPG" onclick="openModal(this.src)">
                         <div class="caption">Memories🍻</div>
@@ -715,7 +831,6 @@
                         <div class="caption">Eternal love</div>
                     </div>
                 </div>
-
                 <div class="slide">
                     <div class="polaroid"><img src="img/IMG_8494.JPG" onclick="openModal(this.src)">
                         <div class="caption">You</div>
@@ -731,7 +846,6 @@
                         <div class="caption">😍</div>
                     </div>
                 </div>
-
                 <div class="slide">
                     <div class="polaroid"><img src="img/IMG_9255.jpeg" onclick="openModal(this.src)">
                         <div class="caption">Always</div>
@@ -739,16 +853,22 @@
                 </div>
 
             </div>
-            <button class="btn prev" onclick="moveSlide(-1)">❮</button>
-            <button class="btn next" onclick="moveSlide(1)">❯</button>
         </div>
-    </section>
+
+        <div class="gallery-nav">
+            <button class="gallery-btn" data-gallery="photo" onclick="movePage('photo', -1)">❮</button>
+            <button class="gallery-btn" data-gallery="photo" onclick="movePage('photo', 1)">❯</button>
+        </div>
+    </div>
+</section>
 
     <!-- VIDEO SLIDER -->
-    <section class="section">
-        <h2>Our Videos</h2>
-        <div class="slider" ontouchstart="touchStartVideo(event)" ontouchend="touchEndVideo(event)">
-            <div class="slides" id="videoSlider">
+<section class="section">
+    <h2>Our Videos</h2>
+
+    <div class="gallery-wrap">
+        <div class="gallery-viewport">
+            <div class="gallery-grid" id="videoSlider">
 
                 <div class="slide">
                     <div class="polaroid">
@@ -850,11 +970,14 @@
                 </div>
 
             </div>
-
-            <button class="btn prev" onclick="moveVideo(-1)">❮</button>
-            <button class="btn next" onclick="moveVideo(1)">❯</button>
-        </div>
-    </section>
+            </div>
+            
+            <div class="gallery-nav">
+<button class="gallery-btn" data-gallery="video" onclick="movePage('video', -1)">❮</button>
+<button class="gallery-btn" data-gallery="video" onclick="movePage('video', 1)">❯</button>
+            </div>
+            </div>
+            </section>
 
     <!-- MODAL -->
     <div id="modal" class="modal">
@@ -900,212 +1023,186 @@
             </div>
         </div>
     </div>
-    <script>
-        // TIMER
-        const startDate = new Date("2025-09-25");
+<script>
+    // TIMER
+    const startDate = new Date("2025-09-25");
 
-        function updateTimer() {
-            const now = new Date();
-            const diff = now - startDate;
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            document.getElementById("timer").innerText = `We are together ${days} days`;
+    function updateTimer() {
+        const now = new Date();
+        const diff = now - startDate;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        document.getElementById("timer").innerText = `We are together ${days} days`;
+    }
+
+    updateTimer();
+    setInterval(updateTimer, 1000);
+
+    // GALLERY STATE
+    const galleryState = {
+        photo: 0,
+        video: 0
+    };
+
+    function getItemsPerPage() {
+        if (window.innerWidth <= 600) return 1;
+        if (window.innerWidth <= 900) return 4;
+        return 6;
+    }
+
+    function rebuildGalleryPages(type) {
+        const sliderId = type === "photo" ? "photoSlider" : "videoSlider";
+        const slider = document.getElementById(sliderId);
+        if (!slider) return;
+
+        const allSlides = Array.from(
+            slider.querySelectorAll(":scope > .slide, :scope > .gallery-page > .slide")
+        );
+
+        slider.innerHTML = "";
+
+        const itemsPerPage = getItemsPerPage();
+
+        for (let i = 0; i < allSlides.length; i += itemsPerPage) {
+            const page = document.createElement("div");
+            page.className = "gallery-page";
+
+            allSlides.slice(i, i + itemsPerPage).forEach(slide => {
+                page.appendChild(slide);
+            });
+
+            slider.appendChild(page);
         }
 
-        updateTimer();
-        setInterval(updateTimer, 1000);
+        const totalPages = slider.children.length;
 
-        // PHOTO SLIDER
-        let current = 0;
-
-        function moveSlide(direction) {
-            const slider = document.getElementById("photoSlider");
-            const total = slider.children.length;
-
-            current += direction;
-
-            if (current < 0) current = total - 1;
-            if (current >= total) current = 0;
-
-            slider.style.transform = `translateX(-${current * 100}%)`;
+        if (galleryState[type] >= totalPages) {
+            galleryState[type] = Math.max(0, totalPages - 1);
         }
 
-        let startX = 0;
+        slider.style.transform = `translateX(-${galleryState[type] * 100}%)`;
+    }
 
-        function touchStart(e) {
-            startX = e.changedTouches[0].screenX;
-        }
+    window.rebuildGalleryPages = rebuildGalleryPages;
 
-        function touchEnd(e) {
-            const endX = e.changedTouches[0].screenX;
+    function rebuildAllGalleries() {
+        rebuildGalleryPages("photo");
+        rebuildGalleryPages("video");
+    }
 
-            if (startX - endX > 50) moveSlide(1);
-            if (endX - startX > 50) moveSlide(-1);
-        }
+    function movePage(type, direction) {
+        const sliderId = type === "photo" ? "photoSlider" : "videoSlider";
+        const slider = document.getElementById(sliderId);
+        if (!slider) return;
 
-        // VIDEO SLIDER
-        let currentVideo = 0;
+        const totalPages = slider.children.length;
+        if (totalPages <= 1) return;
 
-        function moveVideo(direction) {
-            const slider = document.getElementById("videoSlider");
-            const total = slider.children.length;
+        galleryState[type] += direction;
 
-            currentVideo += direction;
+        if (galleryState[type] < 0) galleryState[type] = totalPages - 1;
+        if (galleryState[type] >= totalPages) galleryState[type] = 0;
 
-            if (currentVideo < 0) currentVideo = total - 1;
-            if (currentVideo >= total) currentVideo = 0;
+        slider.style.transform = `translateX(-${galleryState[type] * 100}%)`;
+    }
 
-            slider.style.transform = `translateX(-${currentVideo * 100}%)`;
-        }
+    window.movePage = movePage;
 
-        let startXVideo = 0;
+    // MODAL
+    function openModal(src, type = "") {
+        const modal = document.getElementById("modal");
+        const img = document.getElementById("modal-img");
+        const video = document.getElementById("modal-video");
+        const musicBtn = document.querySelector(".music-btn");
 
-        function touchStartVideo(e) {
-            startXVideo = e.changedTouches[0].screenX;
-        }
+        modal.style.display = "flex";
+        musicBtn.classList.add("hidden");
 
-        function touchEndVideo(e) {
-            const endX = e.changedTouches[0].screenX;
+        const isVideo =
+            type.startsWith("video") ||
+            /\.(mp4|mov|webm|ogg)$/i.test(src);
 
-            if (startXVideo - endX > 50) moveVideo(1);
-            if (endX - startXVideo > 50) moveVideo(-1);
-        }
+        if (isVideo) {
+            img.style.display = "none";
+            img.src = "";
 
+            video.style.display = "block";
+            video.src = src;
+            video.autoplay = true;
+            video.load();
+            video.play().catch(() => { });
+        } else {
+            video.pause();
+            video.src = "";
+            video.style.display = "none";
 
-        // MUSIC
-
-        let playing = false;
-
-            async function toggleMusic() {
-                const music = document.getElementById("music");
-                const button = document.querySelector(".music-btn");
-
-                try {
-                    if (playing) {
-                        music.pause();
-                        playing = false;
-                        button.classList.remove("playing");
-                    } else {
-                        await music.play();
-                        playing = true;
-                        button.classList.add("playing");
-                    }
-                } catch (error) {
-                    console.error("Music play error:", error);
-                    showToast("Music could not start");
-                }
-            }
-
-        // ADD MEDIA
-
-        function handleFileSelect() {
-            const fileInput = document.getElementById("fileInput");
-            const fileStatus = document.getElementById("fileStatus");
-            const file = fileInput.files[0];
-
-            if (file) {
-                fileStatus.textContent = `Selected: ${file.name}`;
-            } else {
-                fileStatus.textContent = "No file selected";
-            }
-        }
-
-        function showToast(message) {
-            const toast = document.getElementById("toast");
-            toast.textContent = message;
-            toast.classList.add("show");
-
-            clearTimeout(window.toastTimeout);
-            window.toastTimeout = setTimeout(() => {
-                toast.classList.remove("show");
-            }, 2500);
-        }
-
-        function showUploadOverlay() {
-                document.getElementById("uploadOverlay").style.display = "flex";
-            }
-
-            function hideUploadOverlay() {
-                document.getElementById("uploadOverlay").style.display = "none";
-            }
-
-            let pendingDelete = null;
-
-            function openDeleteModal(docId, storagePath, slideElement) {
-                pendingDelete = { docId, storagePath, slideElement };
-                document.getElementById("confirmModal").style.display = "flex";
-            }
-
-            function closeDeleteModal() {
-                pendingDelete = null;
-                document.getElementById("confirmModal").style.display = "none";
-            }
-
-
-            //MODAL
-
-            function openModal(src, type = "") {
-                    const modal = document.getElementById("modal");
-                    const img = document.getElementById("modal-img");
-                    const video = document.getElementById("modal-video");
-                    const musicBtn = document.querySelector(".music-btn");
-
-                    modal.style.display = "flex";
-                    musicBtn.classList.add("hidden");
-
-                    const isVideo =
-                        type.startsWith("video") ||
-                        /\.(mp4|mov|webm|ogg)$/i.test(src);
-
-                    if (isVideo) {
-                        img.style.display = "none";
-                        img.src = "";
-
-                        video.style.display = "block";
-                        video.src = src;
-                        video.autoplay = true;
-                        video.load();
-                        video.play().catch(() => { });
-                    } else {
-                        video.pause();
-                        video.src = "";
-                        video.style.display = "none";
-
-                        img.src = src;
-                        img.style.display = "block";
-                    }
-                }
-
-                function closeModal() {
-                    const modal = document.getElementById("modal");
-                    const video = document.getElementById("modal-video");
-                    const musicBtn = document.querySelector(".music-btn");
-
-                    modal.style.display = "none";
-                    video.pause();
-                    video.src = "";
-                    musicBtn.classList.remove("hidden");
-                }
-
-    async function confirmDelete() {
-        if (!pendingDelete) return;
-
-        try {
-            await window.deleteMemory(pendingDelete.docId, pendingDelete.storagePath);
-
-            pendingDelete.slideElement.classList.add("fade-out-card");
-
-            setTimeout(() => {
-                pendingDelete.slideElement.remove();
-                closeDeleteModal();
-                showToast("Memory deleted");
-            }, 450);
-        } catch (error) {
-            console.error("Delete error:", error);
-            closeDeleteModal();
-            showToast("Could not delete memory");
+            img.src = src;
+            img.style.display = "block";
         }
     }
 
+    function closeModal() {
+        const modal = document.getElementById("modal");
+        const video = document.getElementById("modal-video");
+        const musicBtn = document.querySelector(".music-btn");
+
+        modal.style.display = "none";
+        video.pause();
+        video.src = "";
+        musicBtn.classList.remove("hidden");
+    }
+
+    // MUSIC
+    let playing = false;
+
+    async function toggleMusic() {
+        const music = document.getElementById("music");
+        const button = document.querySelector(".music-btn");
+
+        try {
+            if (playing) {
+                music.pause();
+                button.classList.remove("playing");
+            } else {
+                await music.play();
+                button.classList.add("playing");
+            }
+            playing = !playing;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    // TOAST
+    function showToast(message) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        clearTimeout(window.toastTimeout);
+        window.toastTimeout = setTimeout(() => {
+            toast.classList.remove("show");
+        }, 2500);
+    }
+
+    // UPLOAD OVERLAY
+    function showUploadOverlay() {
+        document.getElementById("uploadOverlay").style.display = "flex";
+    }
+
+    function hideUploadOverlay() {
+        document.getElementById("uploadOverlay").style.display = "none";
+    }
+
+    // FILE SELECT
+    function handleFileSelect() {
+        const fileInput = document.getElementById("fileInput");
+        const fileStatus = document.getElementById("fileStatus");
+        const file = fileInput.files[0];
+
+        fileStatus.textContent = file ? `Selected: ${file.name}` : "No file selected";
+    }
+
+    // ADD MEDIA
     async function addMedia() {
         const fileInput = document.getElementById("fileInput");
         const captionText = document.getElementById("captionInput").value.trim();
@@ -1119,13 +1216,15 @@
 
         try {
             showUploadOverlay();
+
             await window.uploadToFirebase(file, captionText);
+
+            hideUploadOverlay();
 
             fileInput.value = "";
             document.getElementById("captionInput").value = "";
             fileStatus.textContent = "No file selected";
 
-            hideUploadOverlay();
             showToast("Memory added ❤️");
         } catch (error) {
             console.error(error);
@@ -1134,147 +1233,203 @@
         }
     }
 
-    </script>
+    // DELETE MODAL
+    let pendingDelete = null;
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import {
-            getStorage,
-            ref,
-            uploadBytes,
-            getDownloadURL,
-            deleteObject
-        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
-        import {
-            getFirestore,
-            addDoc,
-            collection,
-            getDocs,
-            query,
-            orderBy,
-            deleteDoc,
-            doc
-        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    function openDeleteModal(docId, storagePath, slideElement) {
+        pendingDelete = { docId, storagePath, slideElement };
+        document.getElementById("confirmModal").style.display = "flex";
+    }
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyAG6D1m6dLRmZ64pFrkolm5_EEltnaa9TE",
-            authDomain: "ourlove-4620d.firebaseapp.com",
-            projectId: "ourlove-4620d",
-            storageBucket: "ourlove-4620d.firebasestorage.app",
-            messagingSenderId: "19922774823",
-            appId: "1:19922774823:web:eeb33d3befb4547ac81702"
-        };
+    function closeDeleteModal() {
+        pendingDelete = null;
+        document.getElementById("confirmModal").style.display = "none";
+    }
 
-        const app = initializeApp(firebaseConfig);
-        const storage = getStorage(app);
-        const db = getFirestore(app);
+    async function confirmDelete() {
+        if (!pendingDelete) return;
 
+        try {
+            await window.deleteMemory(
+                pendingDelete.docId,
+                pendingDelete.storagePath
+            );
 
-        function createMemorySlide(data) {
-                const isVideo = data.type && data.type.startsWith("video");
+            const type = pendingDelete.slideElement.closest("#videoSlider")
+                ? "video"
+                : "photo";
 
-                const slide = document.createElement("div");
-                slide.className = "slide";
+            pendingDelete.slideElement.classList.add("fade-out-card");
 
-                const polaroid = document.createElement("div");
-                polaroid.className = "polaroid";
+            setTimeout(() => {
+                pendingDelete.slideElement.remove();
+                rebuildGalleryPages(type);
+                closeDeleteModal();
+                showToast("Memory deleted");
+            }, 400);
 
-                let media;
+        } catch (error) {
+            console.error(error);
+            closeDeleteModal();
+            showToast("Could not delete memory");
+        }
+    }
 
-                if (isVideo) {
-                    media = document.createElement("video");
-                    media.controls = true;
-                    media.muted = true;
-                    media.playsInline = true;
-                    media.innerHTML = `<source src="${data.url}" type="${data.type}">`;
-                    media.onclick = () => window.openModal(data.url, data.type);
+    // INIT
+    window.addEventListener("load", () => {
+        rebuildAllGalleries();
+    });
 
-                    media.onerror = () => {
-                        slide.remove();
-                    };
-                } else {
-                    media = document.createElement("img");
-                    media.src = data.url;
-                    media.onclick = () => window.openModal(data.url, data.type || "");
+    window.addEventListener("resize", () => {
+        rebuildAllGalleries();
+    });
+</script>
 
-                    media.onerror = () => {
-                        slide.remove();
-                    };
-                }
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import {
+        getStorage,
+        ref,
+        uploadBytes,
+        getDownloadURL,
+        deleteObject
+    } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+    import {
+        getFirestore,
+        addDoc,
+        collection,
+        getDocs,
+        query,
+        orderBy,
+        deleteDoc,
+        doc
+    } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-                const caption = document.createElement("div");
-                caption.className = "caption";
-                caption.innerText = data.caption || "";
+    const firebaseConfig = {
+        apiKey: "AIzaSyAG6D1m6dLRmZ64pFrkolm5_EEltnaa9TE",
+        authDomain: "ourlove-4620d.firebaseapp.com",
+        projectId: "ourlove-4620d",
+        storageBucket: "ourlove-4620d.firebasestorage.app",
+        messagingSenderId: "19922774823",
+        appId: "1:19922774823:web:eeb33d3befb4547ac81702"
+    };
 
-                if (data.docId && data.storagePath) {
-                    const deleteBtn = document.createElement("button");
-                    deleteBtn.className = "delete-btn";
-                    deleteBtn.innerHTML = "&times;";
-                    deleteBtn.onclick = (e) => {
-                        e.stopPropagation();
-                        window.openDeleteModal(data.docId, data.storagePath, slide);
-                    };
-                    polaroid.appendChild(deleteBtn);
-                }
+    const app = initializeApp(firebaseConfig);
+    const storage = getStorage(app);
+    const db = getFirestore(app);
 
-                polaroid.appendChild(media);
-                polaroid.appendChild(caption);
-                slide.appendChild(polaroid);
+    function isVideoType(type) {
+        return type && type.startsWith("video");
+    }
 
-                if (isVideo) {
-                    document.getElementById("videoSlider").appendChild(slide);
-                } else {
-                    document.getElementById("photoSlider").appendChild(slide);
-                }
-            }
+    function createMemorySlide(data) {
+        const isVideo = isVideoType(data.type);
 
-        async function loadMemories() {
-            try {
-                const memoriesRef = collection(db, "memories");
-                const memoriesQuery = query(memoriesRef, orderBy("createdAt", "asc"));
-                const querySnapshot = await getDocs(memoriesQuery);
+        const slide = document.createElement("div");
+        slide.className = "slide";
 
-                querySnapshot.forEach((docSnap) => {
-                    createMemorySlide({
-                        docId: docSnap.id,
-                        ...docSnap.data()
-                    });
-                });
-            } catch (error) {
-                console.error("Load memories error:", error);
-            }
+        const polaroid = document.createElement("div");
+        polaroid.className = "polaroid";
+
+        let media;
+
+        if (isVideo) {
+            media = document.createElement("video");
+            media.controls = true;
+            media.muted = true;
+            media.playsInline = true;
+            media.innerHTML = `<source src="${data.url}" type="${data.type}">`;
+            media.onclick = () => window.openModal(data.url, data.type);
+            media.onerror = () => slide.remove();
+        } else {
+            media = document.createElement("img");
+            media.src = data.url;
+            media.onclick = () => window.openModal(data.url, data.type || "");
+            media.onerror = () => slide.remove();
         }
 
-        window.uploadToFirebase = async function (file, caption) {
-            const filePath = `memories/${Date.now()}_${file.name}`;
-            const storageRef = ref(storage, filePath);
+        const caption = document.createElement("div");
+        caption.className = "caption";
+        caption.innerText = data.caption || "";
 
-            await uploadBytes(storageRef, file);
-            const url = await getDownloadURL(storageRef);
-
-            const memoryData = {
-                url: url,
-                caption: caption,
-                type: file.type,
-                createdAt: Date.now(),
-                storagePath: filePath
+        if (data.docId && data.storagePath) {
+            const deleteBtn = document.createElement("button");
+            deleteBtn.className = "delete-btn";
+            deleteBtn.innerHTML = "&times;";
+            deleteBtn.onclick = (e) => {
+                e.stopPropagation();
+                window.openDeleteModal(data.docId, data.storagePath, slide);
             };
+            polaroid.appendChild(deleteBtn);
+        }
 
-            const docRef = await addDoc(collection(db, "memories"), memoryData);
+        polaroid.appendChild(media);
+        polaroid.appendChild(caption);
+        slide.appendChild(polaroid);
 
-            createMemorySlide({
-                docId: docRef.id,
-                ...memoryData
+        if (isVideo) {
+            document.getElementById("videoSlider").appendChild(slide);
+        } else {
+            document.getElementById("photoSlider").appendChild(slide);
+        }
+    }
+
+    async function loadMemories() {
+        try {
+            const memoriesRef = collection(db, "memories");
+            const memoriesQuery = query(memoriesRef, orderBy("createdAt", "asc"));
+            const querySnapshot = await getDocs(memoriesQuery);
+
+            querySnapshot.forEach((docSnap) => {
+                createMemorySlide({
+                    docId: docSnap.id,
+                    ...docSnap.data()
+                });
             });
+
+            if (window.rebuildGalleryPages) {
+                window.rebuildGalleryPages("photo");
+                window.rebuildGalleryPages("video");
+            }
+        } catch (error) {
+            console.error("Load memories error:", error);
+        }
+    }
+
+    window.uploadToFirebase = async function (file, caption) {
+        const filePath = `memories/${Date.now()}_${file.name}`;
+        const storageRef = ref(storage, filePath);
+
+        await uploadBytes(storageRef, file);
+        const url = await getDownloadURL(storageRef);
+
+        const memoryData = {
+            url: url,
+            caption: caption,
+            type: file.type,
+            createdAt: Date.now(),
+            storagePath: filePath
         };
 
-        window.deleteMemory = async function (docId, storagePath) {
-            await deleteDoc(doc(db, "memories", docId));
-            await deleteObject(ref(storage, storagePath));
-        };
+        const docRef = await addDoc(collection(db, "memories"), memoryData);
 
-        loadMemories();
-    </script>
+        createMemorySlide({
+            docId: docRef.id,
+            ...memoryData
+        });
+
+        if (window.rebuildGalleryPages) {
+            window.rebuildGalleryPages(isVideoType(file.type) ? "video" : "photo");
+        }
+    };
+
+    window.deleteMemory = async function (docId, storagePath) {
+        await deleteDoc(doc(db, "memories", docId));
+        await deleteObject(ref(storage, storagePath));
+    };
+
+    loadMemories();
+</script>
 
 </body>
 
