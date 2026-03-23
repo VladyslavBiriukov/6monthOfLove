@@ -952,7 +952,7 @@
     </section>
 
     <!-- MODAL -->
-    <div id="modal" class="modal">
+    <div id="modal" class="modal" onclick="handleModalBackdropClick(event)">
         <span class="close" onclick="closeModal()">&times;</span>
         <img id="modal-img" style="display:none;">
         <video id="modal-video" controls style="display:none;"></video>
@@ -1177,6 +1177,12 @@
             video.pause();
             video.src = "";
             musicBtn.classList.remove("hidden");
+        }
+
+        function handleModalBackdropClick(event) {
+            if (event.target.id === "modal") {
+                closeModal();
+            }
         }
 
         // MUSIC
