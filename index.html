@@ -99,6 +99,13 @@
             pointer-events: none;
         }
 
+
+        .google-icon {
+            width: 18px;
+            height: 18px;
+        }
+
+
         @keyframes heroFadeUp {
             from {
                 opacity: 0;
@@ -351,6 +358,72 @@
             background: #7a001f;
         }
 
+        .auth-panel {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .auth-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 26px;
+            border-radius: 999px;
+            border: none;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(255, 240, 245, 0.92));
+            color: #a8002a;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 12px 28px rgba(168, 0, 42, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            font-family: inherit;
+            font-size: 15px;
+            min-width: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-btn::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            left: -100%;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .auth-btn:hover::after {
+            left: 100%;
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 18px 36px rgba(168, 0, 42, 0.2);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 236, 244, 0.96));
+        }
+
+        .auth-btn span,
+        .auth-btn img {
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-status {
+            min-height: 18px;
+            font-size: 14px;
+            color: #a8002a;
+            opacity: 0.82;
+            text-align: center;
+            max-width: min(420px, 90vw);
+            line-height: 1.4;
+        }
+
         .file-status {
             min-height: 20px;
             font-size: 14px;
@@ -548,6 +621,8 @@
                 height: 42px;
             }
 
+            /* .auth-btn and .auth-status blocks removed */
+
             .section {
                 padding: 60px 10px;
             }
@@ -608,6 +683,23 @@
             .modal video {
                 max-width: 96%;
                 max-height: 84%;
+            }
+
+            .auth-panel {
+                margin-top: 18px;
+                gap: 8px;
+            }
+
+            .auth-btn {
+                min-width: min(240px, 90vw);
+                width: min(240px, 90vw);
+                padding: 12px 18px;
+                font-size: 14px;
+            }
+
+            .auth-status {
+                max-width: 90vw;
+                font-size: 12px;
             }
         }
     </style>
@@ -707,6 +799,14 @@
             <input type="text" id="captionInput" placeholder="Write something beautiful..." oninput="normalizeCaptionInput()" />
 
             <button class="add-btn" onclick="addMedia()">Add Memory</button>
+
+            <div class="auth-panel">
+                <button class="auth-btn" id="authBtn" type="button" onclick="login()">
+                    <img class="google-icon" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google icon">
+                    <span id="authBtnText">Enter our world ❤️</span>
+                </button>
+                <div class="auth-status" id="authStatus">Only souls you two can add or delete memories</div>
+            </div>
 
         </div>
     </section>
@@ -1036,6 +1136,11 @@
 
         // ADD MEDIA
         async function addMedia() {
+            if (!window.currentUser) {
+                showToast("Sign in first");
+                return;
+            }
+
             const fileInput = document.getElementById("fileInput");
             const captionText = document.getElementById("captionInput").value.trim();
             const fileStatus = document.getElementById("fileStatus");
@@ -1083,6 +1188,12 @@
         }
 
         async function confirmDelete() {
+            if (!window.currentUser) {
+                showToast("Sign in first");
+                closeDeleteModal();
+                return;
+            }
+
             if (!pendingDelete) return;
 
             try {
@@ -1130,6 +1241,13 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import {
+            getAuth,
+            GoogleAuthProvider,
+            signInWithPopup,
+            onAuthStateChanged,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import {
             getStorage,
             ref,
             uploadBytes,
@@ -1157,8 +1275,110 @@
         };
 
         const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
         const storage = getStorage(app);
         const db = getFirestore(app);
+
+        const allowedEmails = [
+            "gamebsquirreld@gmail.com",
+            "kseniazagariy@gmail.com"
+        ];
+
+        let currentUser = null;
+
+        function updateAuthUi() {
+            const authBtn = document.getElementById("authBtn");
+            const authStatus = document.getElementById("authStatus");
+            const authBtnText = document.getElementById("authBtnText");
+
+            if (!authBtn || !authStatus || !authBtnText) return;
+
+            if (currentUser) {
+                authBtnText.textContent = "You are inside ❤️";
+                authBtn.onclick = window.logout;
+                authStatus.textContent = `Signed in as ${currentUser.email}`;
+            } else {
+                authBtnText.textContent = "Enter our world ❤️";
+                authBtn.onclick = window.login;
+                authStatus.textContent = "Only you two can add or delete memories";
+            }
+        }
+
+        window.login = async function () {
+            try {
+                if (window.location.protocol === "file:") {
+                    showToast("Open the site through Live Server or hosting, not as a file");
+                    return;
+                }
+
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+                const email = (user.email || "").toLowerCase();
+
+                if (!allowedEmails.includes(email)) {
+                    await signOut(auth);
+                    alert("This account does not have access.");
+                    return;
+                }
+
+                showToast("Signed in successfully");
+            } catch (error) {
+                console.error("Login error:", error);
+
+                if (error?.code === "auth/popup-closed-by-user") {
+                    showToast("Sign in window was closed");
+                    return;
+                }
+
+                if (error?.code === "auth/popup-blocked") {
+                    showToast("Browser blocked the sign in popup");
+                    return;
+                }
+
+                if (error?.code === "auth/unauthorized-domain") {
+                    showToast("This domain is not authorized in Firebase");
+                    return;
+                }
+
+                if (error?.code === "auth/operation-not-allowed") {
+                    showToast("Google sign in is not enabled in Firebase");
+                    return;
+                }
+
+                showToast("Sign in error");
+            }
+        };
+
+        window.logout = async function () {
+            try {
+                await signOut(auth);
+                showToast("Signed out");
+            } catch (error) {
+                console.error("Logout error:", error);
+            }
+        };
+
+        onAuthStateChanged(auth, async (user) => {
+            const email = (user?.email || "").toLowerCase();
+
+            if (user && allowedEmails.includes(email)) {
+                currentUser = user;
+            } else {
+                currentUser = null;
+
+                if (user) {
+                    try {
+                        await signOut(auth);
+                    } catch (error) {
+                        console.error("Forced sign out error:", error);
+                    }
+                }
+            }
+
+            window.currentUser = currentUser;
+            updateAuthUi();
+        });
 
         function isVideoType(type) {
             return type && type.startsWith("video");
@@ -1239,6 +1459,10 @@
         }
 
         window.uploadToFirebase = async function (file, caption) {
+            if (!currentUser) {
+                throw new Error("User is not authorized");
+            }
+
             const filePath = `memories/${Date.now()}_${file.name}`;
             const storageRef = ref(storage, filePath);
 
@@ -1250,7 +1474,8 @@
                 caption: caption,
                 type: file.type,
                 createdAt: Date.now(),
-                storagePath: filePath
+                storagePath: filePath,
+                ownerEmail: (currentUser?.email || "").toLowerCase()
             };
 
             const docRef = await addDoc(collection(db, "memories"), memoryData);
@@ -1266,6 +1491,10 @@
         };
 
         window.deleteMemory = async function (docId, storagePath) {
+            if (!currentUser) {
+                throw new Error("User is not authorized");
+            }
+
             await deleteDoc(doc(db, "memories", docId));
             await deleteObject(ref(storage, storagePath));
         };
