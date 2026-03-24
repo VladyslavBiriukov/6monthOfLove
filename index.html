@@ -704,7 +704,7 @@
 
             <div id="fileStatus" class="file-status">No file selected</div>
 
-            <input type="text" id="captionInput" placeholder="Write something beautiful..." />
+            <input type="text" id="captionInput" placeholder="Write something beautiful..." oninput="normalizeCaptionInput()" />
 
             <button class="add-btn" onclick="addMedia()">Add Memory</button>
 
@@ -989,6 +989,11 @@
             const file = fileInput.files[0];
 
             fileStatus.textContent = file ? `Selected: ${file.name}` : "No file selected";
+        }
+
+        function normalizeCaptionInput() {
+            const captionInput = document.getElementById("captionInput");
+            captionInput.value = captionInput.value.replace(/\s+/g, " ").trimStart();
         }
 
         // Compress image helper
